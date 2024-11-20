@@ -1,4 +1,4 @@
 {
-  "directory": ".docker/djp",
-  "postgres_version": "13"
+  "directory": ".docker/cypress",
+  "cypress_version": "base:latest"
 }

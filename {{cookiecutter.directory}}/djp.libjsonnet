@@ -2,32 +2,24 @@ local ddb = import 'ddb.docker.libjsonnet';
 
 local defaultName = ddb.File(std.thisFile).parent.name;
 
-// Docker compose configuration factory for this package.
 local factory(name, params={}) =
-    // Sanitize and set params default values in o using ddb.params.value and ddb.params.array.
-	local o = {
-		// param1: ddb.params.value(params, 'param1', 'default1'),
-		// param2: ddb.params.array(params, 'param2', ['default2']),
-	};
-
-    // Return a docker compose configuration that should configure this package inside a global configuration.
+    local o = {};
 	{services+: {
 		[name]+:
-			ddb.Build(defaultName) // +
-			//ddb.User() +
-			//ddb.Binary("psql", "/project", "psql") +
-			//ddb.Expose("5432") +
-			/*{
-				 environment+: {
-					"POSTGRES_USER": o.login,
-					"POSTGRES_PASSWORD": o.password,
-					"POSTGRES_DB": o.database
-				  },
-				  volumes+: [
-					 ddb.path.project + ":/project",
-					 name + "-data:/var/lib/postgresql/data"
-				  ]
-			}*/
+			ddb.Build(defaultName)  +
+			ddb.User() +
+			ddb.Binary("npm", "/project", "npm") +
+			ddb.Binary("cypress", "/project", "cypress") +
+			{
+			    tty: true,
+                networks: ['default'],
+                environment+: {},
+                volumes+: [
+                 ddb.path.project + ":/project",
+                 name + "-cache:/home/node/.cache",
+                 name + "-npm-packages:/home/node/.npm-packages"
+                ]
+			}
 		}
 	};
 

@@ -1,1 +1,8 @@
-FROM postgres:{{ cookiecutter.postgres_version }}
+FROM cypress/{{ cookiecutter.cypress_version }}
+USER node
+
+RUN npm config set prefix /home/node/.npm-packages
+ENV PATH="${PATH}:/home/node/.npm-packages/bin"
+RUN npm install -g --save-dev cypress
+
+VOLUME /home/node/.cache

@@ -4,7 +4,7 @@ A [ddb](https://inetum-orleans.github.io/docker-devbox-ddb) jsonnet package (**d
 
 ## Description
 
-Write a short description of this **djp** package.
+[Cypress](https://www.cypress.io/) djp package
 
 ## Snippet
 
@@ -13,7 +13,9 @@ Write a short description of this **djp** package.
 ```yaml
 cookiecutter:
   templates:
-    - template: gh:inetum-orleans/djp-template
+    - template: gh:inetum-orleans/djp-cypress
+      extra_context:
+        cypress_version: 'browsers:node18.6.0-chrome105-ff104'
 ```
 
 - `docker-compose.yml.jsonnet`
@@ -21,18 +23,16 @@ cookiecutter:
 ```jsonnet
 ddb.Compose(
   ddb.with(
-    import '.docker/djp/djp.libjsonnet',
-    params={param1: 'value1', param2: ['value2']}
+    import '.docker/cypress/djp.libjsonnet'
   )
 )
 ```
 
 ## Parameters
 
-| name  | type | description |
-| ------------- | ------------- | ------------- |
-| param1  | string  | Description of first parameter
-| param2  | string[]  | Description of second parameter
+| name            | type | description |
+|-----------------| ------------- | ------------- |
+| cypress_version | string  | The tag version of the Docker image of Cypress, ex : base:latest
 
 ## Usage
 
